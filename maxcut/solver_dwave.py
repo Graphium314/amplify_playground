@@ -1,7 +1,8 @@
 import sys
 from amplify import IsingPoly, IsingSymbolGenerator
 from amplify import Solver
-from amplify.client import FixstarsClient
+from amplify.client.ocean import LeapHybridSamplerClient
+
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -28,9 +29,9 @@ def main():
     f /= 2
     f *= -1
 
-    client = FixstarsClient()
-    client.parameters.timeout = 10000 # タイムアウト10秒
-    client.token = os.getenv('FIXSTARS_AE_TOKEN')
+    client = LeapHybridSamplerClient()
+    client.solver = "hybrid_binary_quadratic_model_version2"
+    client.token = os.getenv('DWAVE_TOKEN')
 
     solver = Solver(client)
 
