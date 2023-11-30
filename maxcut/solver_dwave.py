@@ -18,10 +18,11 @@ def main():
     # v: 頂点数, e: 辺数
     v,e = map(int, lines[0].split())
 
+    # イジング変数の設定
     gen = IsingSymbolGenerator()
     s = gen.array(v)
 
-    # f: 目的関数
+    # 目的関数の設定
     f = IsingPoly()
     for i in range(1,e+1):
         u,v,c= map(int, lines[i].split())
@@ -29,12 +30,13 @@ def main():
     f /= 2
     f *= -1
 
+    # clientの設定
     client = LeapHybridSamplerClient()
     client.solver = "hybrid_binary_quadratic_model_version2"
     client.token = os.getenv('DWAVE_TOKEN')
 
+    # 実行
     solver = Solver(client)
-
     result = solver.solve(f)
 
     for sol in result:
